@@ -1,0 +1,12 @@
+---
+- name: Install developer tools
+  pkgng:
+    name:
+      - tree
+      - source-highlight
+      - ripgrep
+      - neovim
+      - sudo
+      - gawk
+      - gsed
+    state: present

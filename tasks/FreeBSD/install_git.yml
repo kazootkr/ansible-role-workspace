@@ -1,0 +1,8 @@
+---
+- name: Install Git
+  pkgng:
+    name:
+      - git
+      - tig
+      - bash
+    state: present

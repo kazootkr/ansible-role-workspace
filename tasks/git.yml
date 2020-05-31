@@ -1,0 +1,43 @@
+---
+- include: "{{ role_path }}/tasks/{{ ansible_os_family }}/install_git.yml"
+
+- name: Define some git alias
+  git_config:
+    name: "{{ item.alias }}"
+    scope: system
+    value: "{{ item.subcmd }}"
+  with_items:
+    - alias: 'alias.sw'
+      subcmd: 'switch'
+    - alias: 'alias.res'
+      subcmd: 'restore'
+    - alias: 'alias.st'
+      subcmd: 'status'
+    - alias: 'alias.co'
+      subcmd: 'checkout'
+    - alias: 'alias.br'
+      subcmd: 'branch'
+    - alias: 'alias.lg'
+      subcmd: 'log --graph --name-status --pretty=format:"%C(red)%h %C(green)%an %ar %Creset%s %C(yellow)%d%Creset"'
+    - alias: 'alias.lg1'
+      subcmd: 'log --pretty=format:"%C(red)%h %C(green)%an %ar %Creset%s%Creset"'
+
+- name: Set user and email
+  git_config:
+    name: "{{ item.alias }}"
+    scope: system
+    value: "{{ item.subcmd }}"
+  with_items:
+    - alias: 'user.name'
+      subcmd: "{{ git_user_name }}"
+    - alias: 'user.email'
+      subcmd: "{{ git_user_email }}"
+
+- name: Set git conf
+  git_config:
+    name: "{{ item.alias }}"
+    scope: system
+    value: "{{ item.subcmd }}"
+  with_items:
+    - alias: 'color.ui'
+      subcmd: 'auto'

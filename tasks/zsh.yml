@@ -1,0 +1,26 @@
+---
+- include_tasks: "{{ role_path }}/tasks/{{ ansible_os_family }}/install_zsh.yml"
+
+- name: User's shell to ZSH
+  user:
+    name: "{{ user_name }}"
+    shell: /usr/local/bin/zsh
+
+- name: Download zplug installer
+  get_url:
+    url: https://raw.githubusercontent.com/zplug/installer/master/installer.zsh
+    dest: /var/tmp/zplug_installer.zsh
+    mode: '0440'
+
+- name: Install zplug
+  command: zsh /var/tmp/zplug_installer.zsh
+  become: false
+  args:
+    chdir: ~/ 
+    creates: ~/.zplug
+
+- name: place zshrc file on home
+  become: false
+  copy:
+    src: zsh/zshrc.onefile
+    dest: ~/.zshrc

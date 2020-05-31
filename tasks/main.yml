@@ -1,0 +1,12 @@
+---
+- include: "{{ role_path }}/tasks/git.yml"
+- include: "{{ role_path }}/tasks/zsh.yml"
+
+- include: "{{ role_path }}/tasks/{{ ansible_os_family }}/devtools.yml"
+- include: "{{ role_path }}/tasks/{{ ansible_os_family }}/tmux.yml"
+
+- name: Add user to group
+  user:
+    name: "{{ user_name }}"
+    group: staff
+    groups: vagrant,wheel,vboxusers

@@ -1,0 +1,9 @@
+---
+- name: Install Developer tools
+  homebrew:
+    name:
+      - tree
+      - source-highlight
+      - ripgrep
+      - neovim
+    state: present

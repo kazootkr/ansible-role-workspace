@@ -1,0 +1,7 @@
+---
+- name: Install Git
+  homebrew:
+    name:
+      - git
+      - tig
+    state: present

@@ -1,0 +1,18 @@
+---
+- name: Install tmux
+  pkgng:
+    name:
+      - tmux
+      - xsel-conrad
+    state: present
+
+
+- name: Place tmux.conf
+  become: False
+  vars:
+    bg_color: red
+  template:
+    src: tmux.conf.j2
+    dest: ~/.tmux.conf
+    backup: yes
+

@@ -1,0 +1,59 @@
+# Prefix
+set-option -g prefix C-t
+unbind C-b
+
+set -sg escape-time 1
+
+## for macOS
+if-shell '[ "which pbcopy" ]' 'unbind -T copy-mode-vi Enter; bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "pbcopy"'
+
+## for x11
+if-shell '[ "which xsel" ]' 'unbind -T copy-mode-vi Enter; bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "xsel"'
+
+# reuse previous session's directory
+unbind %
+bind-key % split-window -h -c "#{pane_current_path}"
+
+unbind '"'
+bind-key '"' split-window -v -c "#{pane_current_path}"
+
+unbind c
+bind c new-window -c "#{pane_current_path}"
+
+# Reload tmux config file
+bind r source-file /usr/local/etc/tmux.conf \; display "Reloaded!"
+
+# Split window vertical
+bind | split-window -h -c "#{pane_current_path}"
+
+# Split window horizontal
+bind - split-window -v -c "#{pane_current_path}"
+
+set-option -g history-limit 20000
+
+set -g mode-keys vi
+# set-window-option -g mode-keys vi
+# set-window-option -g mode-mouse on
+
+# mouse setting
+# set-window-option -g mode-mouse on
+# set-option -g mouse-select-window on
+# set-option -g mouse-select-pane on
+# set-option -g mouse-resize-pane on
+
+set -g mouse
+
+bind -n WheelUpPane if-shell -F -t = "#{mouse_any_flag}" "send-keys -M" "if -Ft= '#{pane_in_mode}' 'send-keys -M' 'select-pane -t=; copy-mode -e; send-keys -M'"
+bind -n WheelDownPane select-pane -t= \; send-keys -M
+
+## =========================
+## Color Style
+## =========================
+# Status bar
+set -g status-style "bg=black,fg={{ bg_color }}"
+
+# Window status current
+setw -g window-status-style "bg={{ bg_color }},fg=black,bold"
+setw -g window-status-current-style "bg={{ bg_color }},fg=black,underscore"
+# setw -g window-status-current-attr bold#,underscore
+set -g pane-active-border-style "fg=black,bg={{ bg_color }}"
